@@ -1,0 +1,29 @@
+# === GİZLİLİK: BEYAZ LİSTE ===
+# Önce HER ŞEY yasak; sadece aşağıda adı geçen güvenli dosyalar git'e girer.
+# (data/, models/, archive/, docs/, notebooks/ bilerek dışarıda: gerçek şirket
+#  verisi, marka/kategori adları ve gerçek adetler içeriyor.)
+*
+
+!.gitignore
+!README.md
+!requirements.txt
+!main.py
+!app.py
+
+!src/
+!src/**
+!tests/
+!tests/**
+!scripts/
+!scripts/**
+!sample_data/
+!sample_data/*.csv
+
+# Beyaz listenin içine sızabilecek çöpler
+__pycache__/
+*.pyc
+.DS_Store
+.pytest_cache/
+catboost_info/
+lightning_logs/
+.ipynb_checkpoints/
