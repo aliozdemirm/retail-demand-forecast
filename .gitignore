@@ -18,6 +18,8 @@
 !scripts/**
 !sample_data/
 !sample_data/*.csv
+!assets/
+!assets/*.png
 
 # Beyaz listenin içine sızabilecek çöpler
 __pycache__/
