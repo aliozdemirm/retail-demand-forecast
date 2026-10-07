@@ -30,6 +30,16 @@ paneli (`app.py`).
 - **Sağlamlık:** 19 otomatik test (sızıntı, feature seti, ağırlık toplamı,
   sipariş kararı, CV altyapısı).
 
+## Örnek çıktı
+
+![12 haftalık backtest: gerçek satış ve ensemble tahmini](assets/forecast_example.png)
+
+*Yukarıdaki grafik `sample_data/` içindeki uydurma veriyle, bu depodaki kodla
+üretildi (`scripts/make_readme_figure.py`). Uydurma veri düzenli ve gürültüsü
+düşük olduğu için buradaki WAPE değerleri (%4–10), gerçek perakende verisinde
+ölçülen %22,9'dan düşüktür; amaç sonuç iddiası değil, panelin/pipeline'ın
+çıktısını göstermektir.*
+
 ## Hızlı başlangıç (örnek veriyle)
 
 ```bash
@@ -81,6 +91,8 @@ src/
   aux_forecasters.py  Prophet/PatchTST'nin sızıntısız walk-forward tahminlerini üretir (opsiyonel feature)
 scripts/
   generate_sample_data.py   Gerçek formatta uydurma örnek veri üretir
+  make_readme_figure.py     README'deki örnek backtest grafiğini üretir (yalnızca sample_data ile)
+assets/             README görseli
 sample_data/        Uydurma örnek veri (sentetik)
 tests/              Otomatik sağlamlık testleri
 ```
