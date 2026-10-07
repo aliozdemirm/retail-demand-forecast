@@ -1,5 +1,7 @@
 # Retail Demand Forecast
 
+[![CI](https://github.com/aliozdemirm/retail-demand-forecast/actions/workflows/ci.yml/badge.svg)](https://github.com/aliozdemirm/retail-demand-forecast/actions/workflows/ci.yml)
+
 **Haftalık satış tahminini, sipariş kararına çeviren uçtan uca bir sistem.**
 
 Perakendede iki hata da pahalıdır: stok az olursa satış kaçar, fazla olursa

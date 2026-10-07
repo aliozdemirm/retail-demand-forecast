@@ -21,6 +21,9 @@
 !sample_data/*.csv
 !assets/
 !assets/*.png
+!.github/
+!.github/workflows/
+!.github/workflows/ci.yml
 
 # Beyaz listenin içine sızabilecek çöpler
 __pycache__/
