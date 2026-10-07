@@ -25,6 +25,25 @@ flowchart LR
 > Aşağıdaki performans rakamları gerçek veri üzerinde ölçülmüştür, örnek
 > veriyle yeniden üretilemez.
 
+## English summary
+
+**Retail Demand Forecast** is an end-to-end system that turns weekly sales
+forecasts into purchase-order decisions for a footwear retailer.
+
+- **Forecasting:** weekly demand per gender × product-category series with a
+  LightGBM / XGBoost / CatBoost ensemble (weights tuned with Optuna and
+  rolling-origin cross-validation) plus quantile models for prediction intervals.
+- **Leakage-safe features:** lags, seasonality, religious and retail holidays,
+  trend. Automated tests guard against target leakage.
+- **Inventory decision:** forecasts are converted into safety stock, target
+  stock and order quantity, and served in a Streamlit dashboard.
+- **Honest evaluation:** WAPE of **22.9% ± 4.5** across 4 rolling-origin folds on
+  the real data. An earlier single-window result looked far better (1–3%)
+  because of target leakage, which was found and fixed.
+- **Data privacy:** the real data and trained models are private and not in this
+  repository. It ships **synthetic sample data**, so everything runs out of the
+  box (commands in the quick-start section below).
+
 ## Öne çıkanlar
 
 - **Dürüst performans:** rolling-origin CV ile ölçülen WAPE **%22,9**
@@ -52,6 +71,15 @@ flowchart LR
 düşük olduğu için buradaki WAPE değerleri (%4–10), gerçek perakende verisinde
 ölçülen %22,9'dan düşüktür; amaç sonuç iddiası değil, panelin/pipeline'ın
 çıktısını göstermektir.*
+
+### Streamlit paneli
+
+![Panel: gelecek talep ve sipariş karar ekranı](assets/panel_example.png)
+
+*Panelin "Gelecek Talep & Sipariş Karar Motoru" sekmesi (tedarik süresi 8
+hafta), yine uydurma örnek veriyle çalışıyor. Ekrandaki adetler ve para
+tutarları sentetik veriden ve panelin varsayılan birim maliyet/fiyat
+girdilerinden hesaplanan örnek değerlerdir; gerçek bir şirkete ait değildir.*
 
 ## Hızlı başlangıç (örnek veriyle)
 
