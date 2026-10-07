@@ -1,10 +1,22 @@
 # Retail Demand Forecast
 
-Bir ayakkabı perakendecisi için haftalık talep tahmini + envanter/sipariş karar motoru.
-LightGBM + XGBoost + CatBoost ensemble'ı, 2023-2026 arası kadın/erkek satış
-ve stok verisinden gelecek haftaların satışını tahmin eder; bu tahmini
-sipariş miktarı ve güvenlik stoku önerisine çevirir. Arayüz Streamlit
-paneli (`app.py`).
+**Haftalık satış tahminini, sipariş kararına çeviren uçtan uca bir sistem.**
+
+Perakendede iki hata da pahalıdır: stok az olursa satış kaçar, fazla olursa
+sermaye rafta bekler. Bu proje, bir ayakkabı perakendecisinin kadın/erkek satış
+ve stok verisinden gelecek haftaların satışını tahmin eder ve bu tahmini
+güvenlik stoğu ile sipariş miktarı önerisine çevirir. Sonuçlar bir Streamlit
+panelinde sunulur.
+
+```mermaid
+flowchart LR
+    A["Haftalık satış + stok<br/>CSV'leri"] --> B["Zaman ızgarası<br/><i>data_loader</i>"]
+    B --> C["Sızıntısız özellikler:<br/>gecikmeler, mevsim, bayram, trend<br/><i>features</i>"]
+    C --> D["LightGBM · XGBoost · CatBoost<br/><i>model, tuning</i>"]
+    D --> E["Ağırlıklı ensemble<br/>+ belirsizlik aralığı"]
+    E --> F["Güvenlik stoğu ve<br/>sipariş miktarı<br/><i>supply_chain</i>"]
+    F --> G["Streamlit paneli<br/><i>app.py</i>"]
+```
 
 > **Veri gizliliği:** Proje gerçek perakende verisiyle geliştirildi; veri,
 > eğitilmiş modeller ve ham çıktılar gizlilik gereği bu depoda **yoktur**.
@@ -28,7 +40,8 @@ paneli (`app.py`).
 - **Uçtan uca envanter kararı:** talep tahmininden (kantil modellerle
   belirsizlik dahil) güvenlik stoku, hedef stok ve sipariş miktarına.
 - **Sağlamlık:** 19 otomatik test (sızıntı, feature seti, ağırlık toplamı,
-  sipariş kararı, CV altyapısı).
+  sipariş kararı, CV altyapısı). Bu depoyu indirdiğinde 13'ü çalışır; kalan 6'sı
+  gizli veriyle eğitilmiş modelleri kontrol ettiği için `models/` yokken atlanır.
 
 ## Örnek çıktı
 
@@ -44,12 +57,15 @@ düşük olduğu için buradaki WAPE değerleri (%4–10), gerçek perakende ver
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt       # çekirdek paketler (birkaç dakika)
 
 python main.py                    # veri → feature → ensemble eğitimi → backtest (örnek veriyle birkaç saniye)
 pytest tests/ -v                  # otomatik testler
 streamlit run app.py              # panel: http://localhost:8501
 ```
+
+Python 3.14 ile test edildi. Ağır opsiyonel paketler (Prophet, PatchTST, notebook)
+örnek veri için gerekmez; istersen `pip install -r requirements-extra.txt`.
 
 `data/` klasörü yoksa kod otomatik olarak `sample_data/` içindeki uydurma
 veriyi kullanır (ekrana uyarı basar). Örnek veriyi yeniden üretmek için:
